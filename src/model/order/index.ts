@@ -1,9 +1,11 @@
-import { OrderItemModel } from "../order-item";
+import { OrderItemModel } from '../order-item';
 
 export interface OrderModel {
   id: string;
-  customerId: string;
-  items: OrderItem[];
+  orderCode: string;
+  customer: any;
+  items: OrderItemModel[];
   total: number;
+  note?: string;
   createdAt: Date;
 }

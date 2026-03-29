@@ -1,26 +1,34 @@
-
-import Realm, { ObjectSchema,BSON } from "realm";
-import { CUSTOMER_SCHEMA_NAME } from "./schemaNames";
-import { CustomerModel } from "../../../model/customer";
+import Realm, { ObjectSchema, BSON } from 'realm';
+import { CUSTOMER_SCHEMA_NAME } from './schemaNames';
+import { CustomerModel } from '../../../model/customer';
 
 export class Customer extends Realm.Object<CustomerModel> {
-  id!: BSON.ObjectId;
+  id!: string;
   name!: string;
   phone!: string;
+  type!: string;
   address!: string;
+  map?: string;
   note?: string;
   createdAt!: Date;
 
-  static schema : ObjectSchema = {
+  static schema: ObjectSchema = {
     name: CUSTOMER_SCHEMA_NAME,
-    primaryKey: "id",
+    primaryKey: 'id',
     properties: {
-      id: 'objectId',
-      name: "string",
-      phone: "string",
-      address: "string",
-      note: "string?",
-      createdAt: "date",
+      id: 'string',
+      name: 'string',
+      phone: 'string',
+      type: 'string',
+      address: 'string',
+      map: 'string?',
+      note: 'string?',
+      createdAt: 'date',
+      orders: {
+        type: 'linkingObjects',
+        objectType: 'Order',
+        property: 'customer',
+      },
     },
   };
 }

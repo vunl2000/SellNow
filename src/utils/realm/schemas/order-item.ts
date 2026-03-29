@@ -1,22 +1,22 @@
-import Realm, { ObjectSchema,BSON } from "realm";
-import { Product } from "./product";
-import { ORDER_ITEM_SCHEMA_NAME } from "./schemaNames";
-import { OrderItemModel } from "../../../model/order-item";
+import Realm, { ObjectSchema } from 'realm';
+import { Product } from './product'; // Import schema Product
+import { ORDER_ITEM_SCHEMA_NAME } from './schemaNames';
+import { OrderItemModel } from '../../../model/order-item';
 
 export class OrderItem extends Realm.Object<OrderItemModel> {
-  _id!: BSON.ObjectId;
-  productId!: Product;
+  product!: Product;
+  productName!: string;
   qty!: number;
-  price!: number; 
+  price!: number;
 
-  static schema:ObjectSchema = {
+  static schema: ObjectSchema = {
     name: ORDER_ITEM_SCHEMA_NAME,
-    primaryKey: "_id",
+    embedded: true, //  Đóng gói chặt vào Order
     properties: {
-      _id: "objectId",
-      productId: "objectId",
-      qty: "double",
-      price: "double",
+      product: 'Product', // LIÊN KẾT: Trỏ thẳng sang bảng Product
+      productName: 'string', // Lưu vết tên
+      qty: 'double', // Lưu số thập phân (nửa cân, 1 lạng...)
+      price: 'double', // Lưu giá trị tiền
     },
   };
 }
